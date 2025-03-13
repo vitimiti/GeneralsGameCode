@@ -1088,7 +1088,7 @@ target_sources(gameengineg PRIVATE
     Include/GameNetwork/NetPacket.h
     Include/GameNetwork/NetworkDefs.h
     Include/GameNetwork/NetworkInterface.h
-    Include/GameNetwork/NetworkUtil.h
+    Include/GameNetwork/networkutil.h
     Include/GameNetwork/RankPointValue.h
     Include/GameNetwork/Transport.h
     Include/GameNetwork/udp.h
