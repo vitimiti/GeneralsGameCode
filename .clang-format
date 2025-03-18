@@ -1,0 +1,25 @@
+BasedOnStyle: LLVM
+
+IndentWidth: 4
+ColumnLimit: 100
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveBitFields: Consecutive
+AlignConsecutiveDeclarations: Consecutive
+AlignConsecutiveMacros: Consecutive
+AlignTrailingComments: true
+AlwaysBreakTemplateDeclarations: Yes
+IndentPPDirectives: BeforeHash
+PointerAlignment: Left
+ReferenceAlignment: Left
+QualifierAlignment: Right
+
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '^"'
+    Priority: 2
+    SortPriority: 2
+    CaseSensitive: true
+  - Regex: "^<"
+    Priority: 1
+    SortPriority: 1
+    CaseSensitive: true

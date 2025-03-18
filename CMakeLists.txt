@@ -1,2 +1,2 @@
 cmake_minimum_required(VERSION 3.30)
-project(GENERALS_ZERO_HOUR)
+project(GENERALS_AND_ZERO_HOUR LANGUAGES C CXX)

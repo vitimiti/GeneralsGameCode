@@ -1,0 +1,13 @@
+Checks: '
+-*,
+bugprone-*,
+cert-*,
+cppcoreguidelines-*,
+hicpp-*,
+misc-*,
+modernize-*,
+performance-*,
+portability-*,
+readability-*'
+
+HeaderFilterRegex: '.*'
