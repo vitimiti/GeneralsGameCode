@@ -1,0 +1,6 @@
+.idea/
+.vs/
+.vscode/
+
+*[B|b]uild*/
+*[O|o]ut*/
