@@ -15,9 +15,13 @@ QualifierAlignment: Right
 
 IncludeBlocks: Regroup
 IncludeCategories:
-  - Regex: '^"'
+  - Regex: '^<SDL3'
     Priority: 2
     SortPriority: 2
+    CaseSensitive: true
+  - Regex: '^"'
+    Priority: 3
+    SortPriority: 3
     CaseSensitive: true
   - Regex: "^<"
     Priority: 1
