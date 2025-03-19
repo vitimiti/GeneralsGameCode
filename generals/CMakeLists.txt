@@ -1,7 +1,7 @@
 project(
   GENERALS
   LANGUAGES C CXX
-  VERSION 0.3.0)
+  VERSION 0.3.1)
 
 configure_file(${PROJECT_SOURCE_DIR}/src/generated.hpp.in
                ${PROJECT_BINARY_DIR}/generated/generated.hpp)

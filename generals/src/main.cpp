@@ -44,13 +44,11 @@ auto process_command_line_arguments(int const argc, char** argv) -> command_line
         // Windowed mode
         if (tokens[i] == "-win") {
             windowed_mode_requested = true;
-            continue;
         }
 
         // Width
         if (tokens[i] == "-xres") {
             requested_xres = std::stoi(tokens[++i]);
-            continue;
         }
 
         // Height
