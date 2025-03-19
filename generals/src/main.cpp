@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <iostream>
+#include <memory>
 #include <print>
 #include <vector>
 
@@ -48,12 +49,26 @@ auto process_command_line_arguments(int const argc, char** argv) -> command_line
 
         // Width
         if (tokens[i] == "-xres") {
-            requested_xres = std::stoi(tokens[++i]);
+            try {
+                requested_xres = std::stoi(tokens[++i]);
+            } catch (std::invalid_argument const& e) {
+                std::println("Invalid argument: {}", e.what()); // Make a logging class
+                continue;
+            } catch (std::out_of_range const& e) {
+                std::println("Invalid argument: {}", e.what()); // Make a logging class
+                continue;
+            }
         }
 
         // Height
         if (tokens[i] == "-yres") {
-            requested_yres = std::stoi(tokens[++i]);
+            try {
+                requested_yres = std::stoi(tokens[++i]);
+            } catch (std::invalid_argument const& e) {
+                std::println("Invalid argument: {}", e.what()); // Make a logging class
+            } catch (std::out_of_range const& e) {
+                std::println("Invalid argument: {}", e.what()); // Make a logging class
+            }
         }
     }
 
@@ -63,8 +78,7 @@ auto process_command_line_arguments(int const argc, char** argv) -> command_line
 }
 } // anonymous namespace
 
-auto SDL_AppInit(void** appstate, [[maybe_unused]] int argc, [[maybe_unused]] char** argv)
-    -> SDL_AppResult {
+auto SDL_AppInit(void** appstate, int const argc, char** argv) -> SDL_AppResult {
 #ifdef GENERALS_AND_ZERO_HOUR_DEBUG
     SDL_SetLogPriorities(SDL_LOG_PRIORITY_VERBOSE);
 #endif // GENERALS_AND_ZERO_HOUR_DEBUG
@@ -78,25 +92,25 @@ auto SDL_AppInit(void** appstate, [[maybe_unused]] int argc, [[maybe_unused]] ch
     auto const [windowed_mode_requested, requested_xres, requested_yres] =
         process_command_line_arguments(argc, argv);
 
-    state_t         state{};
-    SDL_WindowFlags window_flags = SDL_WINDOW_RESIZABLE;
+    auto state = std::make_unique<state_t>();
+
+    SDL_WindowFlags window_flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_VULKAN;
     if (!windowed_mode_requested) {
         window_flags |= SDL_WINDOW_FULLSCREEN;
     }
 
     auto const actual_width  = requested_xres;
     auto const actual_height = requested_yres;
-    state.window = SDL_CreateWindow("Command and Conquer - Generals", actual_width, actual_height,
-                                    window_flags);
+    state->window = SDL_CreateWindow("Command and Conquer - Generals", actual_width, actual_height,
+                                     window_flags);
 
-    *appstate = &state;
+    *appstate = state.release();
     return SDL_APP_CONTINUE;
 }
 
 auto SDL_AppIterate([[maybe_unused]] void* appstate) -> SDL_AppResult { return SDL_APP_CONTINUE; }
 
-auto SDL_AppEvent([[maybe_unused]] void* appstate, [[maybe_unused]] SDL_Event* event)
-    -> SDL_AppResult {
+auto SDL_AppEvent([[maybe_unused]] void* appstate, SDL_Event* event) -> SDL_AppResult {
     if (event->type == SDL_EVENT_QUIT) {
         return SDL_APP_SUCCESS;
     }
